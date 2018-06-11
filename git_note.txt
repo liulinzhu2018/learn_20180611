@@ -1,0 +1,19 @@
+github 
+ussername: liulinzhu2018
+password:  llz920127
+https://github.com/orgs/liulinzhu1/people/liulinzhu2018
+
+git config --global user.name "liulinzhu2018"
+git config --global user.email "13683318620@126.com"
+
+windows : FC txt1 txt2
+linux   : diff -u txt1 txt2
+
+版本控制
+
+git log --stat 查看每个commit id 下面修改的文件，以及添加和删除的长度
+
+git config --global color.ui auto 有颜色的
+
+git diff commitid1 commitid2
+
