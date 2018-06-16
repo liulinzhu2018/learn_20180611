@@ -93,8 +93,13 @@ step 2 推送本地仓库的文件到远程仓库：git push -u origin master，
 git pull 更新本地仓库
 
 替换本地改动
-git checkout -- filename 将工作区文件的改动替换为HEAD中的内容，不会影响临时区和新添加的文件
+git checkout . 或 git checkout -- filename 用临时区替换工作区的改动
+git checkout head . 或 git checkout head filename 用head替换工作区和临时区
+
 git fetch origin 取远程仓库的内容覆盖本地的所有改动和提交。
-git reset head -- filename 撤销上次暂存（取消暂存区的内容，用head指向的目录（版本库）替换暂存区）
-git reset --hard head 撤销本地和暂存区的所有变动（用head指向的目录（版本库）替换本地和暂存区）
-git reset --hard origin/master 撤销本地、暂存区、版本库(用远程服务器的origin/master替换本地、暂存区、版本库)
+
+git reset head -- filename 用head指向的目录（版本库）替换暂存区
+git reset --hard head 用head指向的目录（版本库）替换本地和暂存区
+git reset --hard origin/master 用远程服务器的origin/master替换本地、暂存区、版本库
+
+git rm --cached filename 从暂存区删除文件，工作区则不做出改变。
