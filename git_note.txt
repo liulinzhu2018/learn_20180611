@@ -2,9 +2,16 @@ github
 ussername: liulinzhu2018
 password:  llz920127
 https://github.com/orgs/liulinzhu1/people/liulinzhu2018
+https://github.com/liulinzhu2018/learn_20180611
+
 
 git config --global user.name "liulinzhu2018"
 git config --global user.email "13683318620@126.com"
+
+git remote add origin git@github.com:liulinzhu2018/learn_20180611
+git pull origin master --allow-unrelated-histories
+git push --set-upstream origin master
+
 
 windows : FC txt1 txt2
 linux   : diff -u txt1 txt2
@@ -15,5 +22,65 @@ git log --stat 查看每个commit id 下面修改的文件，以及添加和删�
 
 git config --global color.ui auto 有颜色的
 
-git diff commitid1 commitid2
+
+
+
+执行git init命令创建仓库，之后产生.git目录，存放元数据
+
+HEAD：当前提交的名称
+工作区working direction
+临时区stating area
+仓库repository
+
+修改文件是在工作区进行修改的，git status 下面Changes not staged for commit 里面显示修改，
+git add 将工作区的修改提交到临时区，git status 下面Changes to be committed:里面的内容就是提交到临时区的内容。
+git commit -m "log" 将修改提交到本地的仓库，仓库中包含多个commit，每个commit中包含修改的文件。 
+
+git add xxx是提交到临时区，
+git reset xxx是删除临时区的文件
+git reset --hard是删除工作区或临时区的所有修改
+git status 查看临时区
+git diff 对比工作区和临时区文件的区别
+git diff --staged 对比临时区和本地仓库的区别
+git diff commitid1 commitid2 比较本地仓库中两次提交的区别
+
+分支
+git branch xxx 创建分支
+git branch 查看分支
+git checkout xxx 切换到分支
+git checkout -b newbranch 相当于是执行git branch xx, git checkout xxx
+git checkout -d newbranch 删除分支
+
+git log --graph --oneline master newbranch
+git log -n 1 查看距离当前最近的一条日志
+
+
+合并两个分支同一个文件，如果原始文件中中有，且一个分支中有，一个分支中被删除了，那么这个最终被删除。
+如果原始文件中没有，且一个分支添加了，那么最终会被添加。
+
+git merge master branchname
+冲突处理
+
+git show commitid 查看某次提交的更改
+
+
+添加远程库
+在github上创建一个仓库xxx，再在本地xxx仓库下执行git remote add origin git@github.com:user/pwd 将本地和远程的仓库关联。
+git push -u origin master 将当前分支master推送到远程仓库
+
+在网页的github上能够创建文件，并进行提交
+
+clone两种：1.local到local  2.github到local
+fork: github到github
+
+fetch
+
+
+合并步骤
+git merge master origin/master
+处理冲突
+git push origin master 唯一会改变的是本地 master
+git push 工作目录和暂存区也会更新
+
+
 
