@@ -16,6 +16,9 @@ git push --set-upstream origin master
 https://github.com/git/git/releases
 https://www.kernel.org/pub/software/scm/git/
 
+参考：
+https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000
+
 windows : FC txt1 txt2
 linux   : diff -u txt1 txt2
 
@@ -25,60 +28,74 @@ git config --global color.ui auto 有颜色的git输出
 git --version
 
 创建仓库
-1. 本地创建仓库，执行git init命令创建仓库，之后产生.git目录，存放元数据
-2. 在网页的github上能够创建仓库，创建文件，修改，提交，等等
+本地创建仓库，执行git init命令创建仓库，之后产生.git目录，存放元数据
+在网页的github上能够创建仓库，创建文件，修改，提交，等等
+
+添加远程库
+在github上创建一个仓库xxx，再在本地xxx仓库下执行git remote add origin git@github.com:user/pwd 将本地和远程的仓库关联。
+git push -u origin master 将当前分支master推送到远程仓库
+git remote -v 查看远程库信息
+git branch --set-upstream branch-name origin/branch-name 建立本地分支和远程分支的关联
+
+clone两种：
+1.local到local : git clone /path/to/repository 本地路径
+2.github到local：git clone username@host:/path/to/repository
 
 HEAD：当前提交的名称
 工作区working direction
 临时区stating area
 仓库repository
 
-修改文件是在工作区进行修改的，git status 下面Changes not staged for commit 里面显示修改，
-git add 将工作区的修改提交到临时区，git status 下面Changes to be committed:里面的内容就是提交到临时区的内容。
+修改文件--添加文件--提交文件
+修改文件是在工作区进行修改的，git status查看工作区和临时区， 里面Changes not staged for commit 表示工作区的修改，
+git add filename将工作区的修改提交到临时区，git add -i交互式添加文件，git status 里面Changes to be committed 表示提交到临时区的文件。
 git commit -m "log" 将修改提交到本地的仓库的HEAD中，仓库中包含多个commit，每个commit中包含修改的文件。 
 
-git add xxx是提交到临时区，git add -i交互式添加文件
-git reset xxx是删除临时区的文件
-git reset --hard是删除工作区或临时区的所有修改
-git status 查看临时区
+删除文件
+git rm filename 删除文件
+git rm --cached filename 从缓存区删除文件，工作区则不做出改变。
+
+撤销文件修改
+git reset filename 撤销临时区的修改
+git reset --hard 撤销工作区或临时区的所有修改
+git reset head -- filename 撤销工作区或临时区对文件的修改
+git checkout head . 或 git checkout head -- filename 撤销工作区和临时区对文件的修改
+git checkout . 或 git checkout -- filename 用临时区替换工作区的改动
+
+比较文件区别
 git diff 对比工作区和临时区文件的区别
 git diff --staged 对比临时区和本地仓库的区别
 git diff commitid1 commitid2 比较本地仓库中两次提交的区别
+git diff head filename 比较head和工作区或临时区某个文件的区别
 git show commitid 查看某次提交的更改
 
+
 分支
-git checkout -b newbranch 创建分支
+git checkout -b newbranch 创建并切换到分支
 git checkout -d newbranch 删除分支
 git branch 查看分支
 git checkout xxx 切换到分支
 git push origin branchname 将分支推送到远程仓库
 
-日志
-git log --graph --oneline master newbranch
-git log -n 1 查看距离当前最近的一条日志
-git log --stat 查看每个commit id 下面修改的文件，以及添加和删除的长度
-
-
-添加远程库
-在github上创建一个仓库xxx，再在本地xxx仓库下执行git remote add origin git@github.com:user/pwd 将本地和远程的仓库关联。
-git push -u origin master 将当前分支master推送到远程仓库
-
-
-clone两种：
-1.local到local : git clone /path/to/repository 本地路径
-2.github到local：git clone username@host:/path/to/repository
-
-fork: github到github
-
-合并
-git merge branchname 合并其他分支到自己的分支
-git merge master origin/master？
-git merge master branchname ？
+合并分支
+实际是修改指针，将master和head的指针指向当前的分支，之后删除分支，只是移除指向分支的指针。
+git merge branchname --no-ff -m "log info" 合并其他分支到自己的分支，--no-ff表示禁用fast-forward
 处理冲突，先修改冲突的文件，之后git add filename 表示冲突已经修改，再进行合并。
 git diff <source_branch> <target_branch> 在合并前，预览差异
 
 合并两个分支同一个文件，如果原始文件中中有，且一个分支中有，一个分支中被删除了，那么这个最终被删除。
 如果原始文件中没有，且一个分支添加了，那么最终会被添加。
+
+
+日志
+git log --graph --oneline
+git log -n 1 查看距离当前最近的一条日志
+git log --stat 查看每个commit id 下面修改的文件，以及添加和删除的长度
+git log --pretty=oneline 每条日志打印一行，只打印commit id和日志信息
+git log --oneline 每条日志打印一行，只打印commit id的前7位和日志信息
+
+
+fork: github到github
 
 
 推送两种：
@@ -92,14 +109,18 @@ step 2 推送本地仓库的文件到远程仓库：git push -u origin master，
 更新
 git pull 更新本地仓库
 
-替换本地改动
-git checkout . 或 git checkout -- filename 用临时区替换工作区的改动
-git checkout head . 或 git checkout head filename 用head替换工作区和临时区
 
+版本回退
 git fetch origin 取远程仓库的内容覆盖本地的所有改动和提交。
-
-git reset head -- filename 用head指向的目录（版本库）替换暂存区
-git reset --hard head 用head指向的目录（版本库）替换本地和暂存区
+git reset --hard head  回退到head指向的版本，用head指向的目录（版本库）替换本地和暂存区
+git reset --hard head^ 回退到head指向的前一个版本
+git reset --hard commit_id 回到commit_id（可以是前7位，也可是是全的commit id）版本
+git reflog 查看所有日志，包括回退版本后，在它之后的提交日志（git log只能看到当前版本之前的日志），和所有回退版本的日志。
 git reset --hard origin/master 用远程服务器的origin/master替换本地、暂存区、版本库
 
-git rm --cached filename 从暂存区删除文件，工作区则不做出改变。
+
+隐藏工作区
+git stash 隐藏工作区，当工作区在做一些修改时，这时又有另一个任务需要修改，此时可以先隐藏工作区，再创建新的分支，这个分支是不包括当前的改动的，再在新分支上完成另一个任务，进行提交，再合并到主分支，再删除分支，之后回到之前开发一半的分支，恢复隐藏，继续工作。
+git stash list 查看隐藏的工作区
+git stash apply 恢复stash内容,但stash并不删除，需要用git stash drop来删除
+git stash pop 恢复stash的同时把stash也删了
