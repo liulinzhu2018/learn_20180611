@@ -124,3 +124,12 @@ git stash 隐藏工作区，当工作区在做一些修改时，这时又有另�
 git stash list 查看隐藏的工作区
 git stash apply 恢复stash内容,但stash并不删除，需要用git stash drop来删除
 git stash pop 恢复stash的同时把stash也删了
+
+常用问题：
+git管理的某些目录和文件不小心被删除了，怎么恢复？
+git checkout [branch] filename 恢复工作区和临时区的文件
+
+git reset --hard head filename/dir
+git checkout filename/dir
+https://segmentfault.com/a/1190000006185954
+
