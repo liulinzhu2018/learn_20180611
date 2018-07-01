@@ -4,17 +4,15 @@
 * [主要内容](#main)
 * [学习网站](#learning-web)
 
-<h2 id="main">主要内容</h2>
-## 主要内容
-1. 标题，简短的描述
-2. installation
-3. usage
-4. license, 保留所有权
-5. 已知 BUG，常见问题，内容列表
-6. 最佳使用markdown格式编写
+<h2 id="main">主要内容</h2>  
+- 1. 标题，简短的描述
+- 2. installation
+- 3. usage
+- 4. license, 保留所有权
+- 5. 已知 BUG，常见问题，内容列表
+- 6. 最佳使用markdown格式编写
 
 <h2 id="learning-web">学习网站</h2>
-## 学习网站
 - markdown 文档  
   - https://discussions.youdaxue.com/t/markdown/24241  （输入两个空格再回车能够`换行`）
   - https://help.github.com/articles/getting-started-with-writing-and-formatting-on-github/
