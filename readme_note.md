@@ -8,8 +8,8 @@
 6. 最佳使用markdown格式编写
 ## 学习网站
 - markdown 文档  
- https://discussions.youdaxue.com/t/markdown/24241  
- https://help.github.com/articles/getting-started-with-writing-and-formatting-on-github/
+  - https://discussions.youdaxue.com/t/markdown/24241  （输入两个空格再回车能够`换行`）
+  - https://help.github.com/articles/getting-started-with-writing-and-formatting-on-github/
 - GitHub风格的Markdown语法与一般Markdown语法的区别：https://help.github.com/categories/writing-on-github/
 - 在线markdown编辑器：https://dillinger.io/
 - 扩展名.md 
