@@ -133,3 +133,5 @@ git reset --hard head filename/dir
 git checkout filename/dir
 https://segmentfault.com/a/1190000006185954
 
+
+HEAD^^^2 is the 4c9749e commit (this is the grandparent's (HEAD^^) second parent (^2))
