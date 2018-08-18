@@ -16,6 +16,11 @@ git push --set-upstream origin master
 https://github.com/git/git/releases
 https://www.kernel.org/pub/software/scm/git/
 
+Git Bash 本地配置
+1. 生成key: id_rsa.pub, id_rsa
+ssh-keygen -t rsa -C "13683318620@126.com"
+2. 将公钥id_rsa.pub添加到git上面
+
 参考：
 https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000
 
