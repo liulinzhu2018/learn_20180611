@@ -129,7 +129,8 @@ git show SHA 查看SHA具体文件改动的内容。
 # branch
 git checkout -b newbranch 创建并切换到分支  
 git checkout -d newbranch 删除分支  
-git branch 查看分支  
+git branch 查看本地分支  
+git branche -a 查看远程分支  
 git checkout xxx 切换到分支  
 git push origin branchname 将分支推送到远程仓库(origin)  
 
