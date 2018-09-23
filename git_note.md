@@ -166,16 +166,25 @@ git show SHA 查看SHA具体文件改动的内容。
 - git config --global alias.co checkout 设置checkout的别名为co
 
 # branch
-git checkout -b newbranch 创建并切换到分支  
-git checkout -d newbranch 删除分支  
-git branch 查看本地分支  
-git branche -a 查看远程分支  
-git checkout xxx 切换到分支  
-git push origin branchname 将分支推送到远程仓库(origin)  
+- **创建分支实际是创建一个指针指向在当前的提交对象，相当与是像一个文件写41个字节（40字符SHA-1+1字符换行）。HEAD指针指向当前的提交对象。通过git log --decorate可以看到指针的位置**
+- 创建并切换到分支：git checkout -b newbranch  
+- 删除分支：git checkout -d newbranch (-D 强迫删除) 
+- 切换到分支：git checkout xxx  **此时HEAD的指针将移动到切换后的分支**
+>> 无论是切换到master分支或是其他分支，所作的事情都是相同的，下面以切换到master分支为例，执行git checkout master会做两件事情，一是将HEAD指针指向master分支，二是将master的最后一次的提交的快照切换回工作区，如果git不能完成这样的任务那么切换分支的操作会被阻止。
+- 将分支推送到远程仓库(origin)：git push origin branchname  
+- 查看分支
+  - 查看本地分支：git branch   
+  - 查看远程分支：git branch -a 
+  - 查看每个分支最后一次提交：git branch -v
+  - 查看已经合并到当前分支的分支：git branch --merged
+  - 查看未合并到当前分支的分支：git branch --no-merged
+- 删除远程分支： git push origin --delete branchname, 只会从服务器上删除分支的指针，分支实际会保留一段时间，等待垃圾回收机制进行处理。
+- 分支跟踪：git checkout -b branchname remotename/branchname 或git checkout --track remotename/branchname
 
 # merge 合并分支
 - git merge <other-branch>  
-- 实际是修改指针，将master和head的指针指向当前的分支，之后删除分支，只是移除指向分支的指针。  
+- 合并分支实际是修改指针，将master和head的指针指向当前的分支，删除分支只是移除指向分支的指针。
+- 在合并分支时，A分支合并到B分支，1.如果B分支是A分支的直接祖先，通过移动B分支的指针到达A分支，且没有任何冲突，那么直接修改B分支的指针就实现了分支的合并，这称为`“Fast-forward”`, 在执行merge操作时，也会显示Fast-forward。2.如果B分支不是A分支的直接祖先，那么合并时git会使用A和B分支末端的快照和它们的公共祖先进行三方合并，创建出一个新的提交快照。在执行merge操作时，会显示Merge made by the 'recursive' strategy. 3.合并分支遇到冲突时，git会先尝试自动合并冲突，如果合并失败，会显示那些文件合并冲突失败，此时就需要自己打开冲突文件解决，也可以使用git mergetool打开可视化工具辅助合并。
 - git merge branchname --no-ff -m "log info" 合并其他分支到自己的分支，--no-ff表示禁用fast-forward  
 - 处理冲突，先修改冲突的文件，之后git add filename 表示冲突已经修改，再进行合并。  
 - git diff <source_branch> <target_branch> 在合并前，预览差异  
