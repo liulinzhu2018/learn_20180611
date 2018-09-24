@@ -187,13 +187,29 @@ git show SHA 查看SHA具体文件改动的内容。
 # merge 合并分支
 - git merge <other-branch>  
 - 合并分支实际是修改指针，将master和head的指针指向当前的分支，删除分支只是移除指向分支的指针。
-- 在合并分支时，A分支合并到B分支，1.如果B分支是A分支的直接祖先，通过移动B分支的指针到达A分支，且没有任何冲突，那么直接修改B分支的指针就实现了分支的合并，这称为`“Fast-forward”`, 在执行merge操作时，也会显示Fast-forward。2.如果B分支不是A分支的直接祖先，那么合并时git会使用A和B分支末端的快照和它们的公共祖先进行三方合并，创建出一个新的提交快照。在执行merge操作时，会显示Merge made by the 'recursive' strategy. 3.合并分支遇到冲突时，git会先尝试自动合并冲突，如果合并失败，会显示那些文件合并冲突失败，此时就需要自己打开冲突文件解决，也可以使用git mergetool打开可视化工具辅助合并。
+- 在合并分支时，A分支合并到B分支，1.如果B分支是A分支的直接祖先，通过移动B分支的指针到达A分支，且没有任何冲突，那么直接修改B分支的指针就实现了分支的合并，这称为`“Fast-forward”`, 在执行merge操作时，也会显示Fast-forward。2.如果B分支不是A分支的直接祖先，那么合并时git会使用A和B分支末端的快照和它们的公共祖先进行`三方合并`，创建出一个新的提交快照。在执行merge操作时，会显示Merge made by the 'recursive' strategy. 3.合并分支遇到冲突时，git会先尝试自动合并冲突，如果合并失败，会显示那些文件合并冲突失败，此时就需要自己打开冲突文件解决，也可以使用git mergetool打开可视化工具辅助合并。
 - git merge branchname --no-ff -m "log info" 合并其他分支到自己的分支，--no-ff表示禁用fast-forward  
 - 处理冲突，先修改冲突的文件，之后git add filename 表示冲突已经修改，再进行合并。  
 - git diff <source_branch> <target_branch> 在合并前，预览差异  
 
 合并两个分支同一个文件，如果原始文件中中有，且一个分支中有，一个分支中被删除了，那么这个最终被删除。  
 如果原始文件中没有，且一个分支添加了，那么最终会被添加。  
+
+# git rebase
+- 合并分支操作除了使用merge的方法进行三方合并外，还可以采用rebase的方法，eg, 将A分支合并到B分支，rebase步骤：
+  - git checkout A; git rebase B 将A的修改rebase到B上
+    1. 找到这两个分支的公共祖先
+    2. 对比当前分支A与该祖先的历次提交，提前相应的修改保存为临时文件
+    3. 将当前分支指向基底（B分支的最后提交）
+    4. 将临时文件记录的修改依次应用在当前的分支
+  - git checkout B; git merge A
+    1. 由于通过上一步已经使得B分支是A分支的直接祖先，那么在合并时，直接进行Fast-forward即可
+    2. A和B的指针共同指向了合并后的最后一个commit
+  - git branch -d A 最后合并完成后，别忘删除分支
+- 使用rebase的好处在于最终commit记录为一条直线，没有分叉，看起来更加清晰，而采用merge的方式，会有分叉，不方便维护。
+- 将多个commit压制（squash）为一个commit 
+- git rebase -i HEAD~3 将最后三个提交合并为一个提交 
+- git push -f 强制推送 
 
 # git revert
 - git revert SHA  
@@ -263,10 +279,7 @@ git push <remote-shortname> <branch>
  
  ![image](https://github.com/liulinzhu2018/learn_20180611/blob/master/img/pull_request.png)
 
-# git rebase
-- 将多个commit压制（squash）为一个commit 
-- git rebase -i HEAD~3 将最后三个提交合并为一个提交 
-- git push -f 强制推送 
+
 
 
 
