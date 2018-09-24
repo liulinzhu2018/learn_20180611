@@ -171,7 +171,7 @@ git show SHA 查看SHA具体文件改动的内容。
 - 删除分支：git checkout -d newbranch (-D 强迫删除) 
 - 切换到分支：git checkout xxx  **此时HEAD的指针将移动到切换后的分支**
 >> 无论是切换到master分支或是其他分支，所作的事情都是相同的，下面以切换到master分支为例，执行git checkout master会做两件事情，一是将HEAD指针指向master分支，二是将master的最后一次的提交的快照切换回工作区，如果git不能完成这样的任务那么切换分支的操作会被阻止。
-- 将分支推送到远程仓库(origin)：git push origin branchname  
+- 将本地分支推送到远程仓库(origin)：git push --set-upstream origin branchname(第一次要使用这个命令), git push origin branchname
 - 查看分支
   - 查看本地分支：git branch   
   - 查看远程分支：git branch -a 
@@ -179,7 +179,10 @@ git show SHA 查看SHA具体文件改动的内容。
   - 查看已经合并到当前分支的分支：git branch --merged
   - 查看未合并到当前分支的分支：git branch --no-merged
 - 删除远程分支： git push origin --delete branchname, 只会从服务器上删除分支的指针，分支实际会保留一段时间，等待垃圾回收机制进行处理。
-- 分支跟踪：git checkout -b branchname remotename/branchname 或git checkout --track remotename/branchname
+- 分支跟踪：
+  - 创建跟踪远程分支remotename/branchname的本地分支branchname：git checkout -b branchname remotename/branchname 或git checkout --track remotename/branchname
+  - 已有本地分支，跟踪刚拉取下来的远程分支：git branch -u origin/branchname
+  - 查看所有分支（包括没有跟踪远程的分支）：git branch -vv 可以看到本地的分支领先（eg, ahead 2领先两个提交），还是落后（eg, behind 1落后一个提交）。这个数据是本地最近一次拉取远程分支的数据，和实际远程分支可能有差异，所以要查看比较准确的数据，需要将远程分支全部在拉取一遍，执行git fetch --all,再git branch -vv.
 
 # merge 合并分支
 - git merge <other-branch>  
@@ -237,7 +240,7 @@ git push <remote-shortname> <branch>
 - git merger origin/master 将本地master指针移动到origin/master指针的位置  
 - git fetch使用场景，当本地和远程都有改动和更新，且需要本地的更改合并到远程master时，就要分三步进行   
   - 1）fetch 拉取远程的更新d-e，  
-  - 2）merger 将自己的更新与origin/master的合并，f和d-e合并为g。  
+  - 2）merge 将自己的更新与origin/master的合并，f和d-e合并为g。  
   - 3）git pull origin master 推送到远程仓库 
   
 ![image](https://github.com/liulinzhu2018/learn_20180611/blob/master/img/git_fetch.png)
