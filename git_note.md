@@ -103,6 +103,7 @@ clone两种：
 - git diff commitid1 commitid2 比较本地仓库中两次提交的区别
 - git diff head filename 比较head和工作区或临时区某个文件的区别
 - git show commitid 查看某次提交的更改
+- git diff --check 检查空白错误
 
 # .gitignore 文件
 - 创建这个文件，里面可以自己写入忽视的文件，这样执行git status就不会看到它们，可以防止不小心被提交
@@ -171,7 +172,7 @@ git show SHA 查看SHA具体文件改动的内容。
 - 删除分支：git checkout -d newbranch (-D 强迫删除) 
 - 切换到分支：git checkout xxx  **此时HEAD的指针将移动到切换后的分支**
 >> 无论是切换到master分支或是其他分支，所作的事情都是相同的，下面以切换到master分支为例，执行git checkout master会做两件事情，一是将HEAD指针指向master分支，二是将master的最后一次的提交的快照切换回工作区，如果git不能完成这样的任务那么切换分支的操作会被阻止。
-- 将本地分支推送到远程仓库(origin)：git push --set-upstream origin branchname(第一次要使用这个命令), git push origin branchname
+- 将本地分支推送到远程仓库(origin)：git push --set-upstream origin branchname(第一次要使用这个命令, 或-u，-u是--set-upstream的简写), git push origin branchname, git push -u origin A:B 
 - 查看分支
   - 查看本地分支：git branch   
   - 查看远程分支：git branch -a 
