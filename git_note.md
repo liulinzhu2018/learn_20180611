@@ -1,6 +1,5 @@
 github  
-ussername: liulinzhu2018  
-password:  llz920127  
+
 https://github.com/orgs/liulinzhu1/people/liulinzhu2018  
 https://github.com/liulinzhu2018/learn_20180611  
 
