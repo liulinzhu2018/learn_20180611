@@ -126,8 +126,10 @@ git log --graph --oneline
 git log -n 2 或者 git log -2 查看距离当前最近两次的提交  
 git log --since=2.weeks 近两周的改动
 git log --stat 查看每个commit id 下面修改的文件，以及添加和删除的长度  
-git log --pretty=oneline 每条日志打印一行，只打印commit id和日志信息  
-git log --oneline 每条日志打印一行，只打印commit id的前7位和日志信息  
+git log --pretty=oneline 每条日志打印一行，只打印commit id(SHA-1 40位，16进制)和日志信息  
+git log --abbrev-commit 打印commit id（SHA-1只显示7位，16进制）和日志信息
+git log --oneline 每条日志打印一行，只打印commit id的前7位和日志信息（这个命令等于git log --abbrev-commit --pretty=oneline）
+
 git log dir dir目录下的提交记录
 git log -p 打印出提交的文件的修改内容
 git log -w  
@@ -139,6 +141,9 @@ git log --grep=bug
 git log --grep bug  
 git log -Sfunction_name 过滤出含有function_name的改动
 多个过滤条件要加--all-match,否则满足任意一个过滤条件都会被打印
+
+git log experiment..master 会显示在 master 分支中而不在 experiment 分支中的提交
+
 
 # git shortlog
 git shortlog 可以看到汇总后每个人的提交  
@@ -213,7 +218,15 @@ git show SHA 查看SHA具体文件改动的内容。
 
 # git revert
 - git revert SHA  
-- git reflog 查看所有日志，包括回退版本后，在它之后的提交日志（git log只能看到当前版本之前的日志），和所有回退版本的日志。  
+- git reflog 查看所有日志，包括回退版本后，在它之后的提交日志（git log只能看到当前版本之前的日志），和所有回退版本的日志。 (包括自己git操作日志，包括切换分支的日志)
+- git show HEAD@{2} 查看某个操作。
+```
+上面的日志是新的，下面的日志是旧的。
+git reflog
+52b9730 (HEAD -> master) HEAD@{0}: checkout: moving from dev to master
+0a9cd94 (origin/dev, dev) HEAD@{1}: checkout: moving from master to dev
+52b9730 (HEAD -> master) HEAD@{2}: checkout: moving from dev to master
+```
 
 # git reset
 - 撤销对最近一次提交的文件
@@ -287,5 +300,6 @@ git push <remote-shortname> <branch>
 
 ------------------------------------
 # 常用问题记录
-git管理的某些目录和文件不小心被删除了，怎么恢复？
+1. git管理的某些目录和文件不小心被删除了，怎么恢复？
 git checkout [branch] filename 恢复工作区和临时区的文件
+2. git show HEAD^ or HEAD~1 查看一个节点的多个父节点
